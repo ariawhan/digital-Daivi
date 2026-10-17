@@ -905,25 +905,6 @@
       color:var(--maroon);
       overflow-wrap:anywhere;
     }
-    .wish-attendance {
-      flex-shrink:0;
-      font:500 9px/1.6 var(--sans);
-      border:1px solid #cfdbc6;
-      border-radius:20px;
-      padding:3px 9px;
-      background:#eef3e9;
-      color:#53694a;
-    }
-    .wish-attendance[data-attendance="tidak_hadir"] {
-      color:#8a5360;
-      background:#f6eaed;
-      border-color:#e4cbd1;
-    }
-    .wish-attendance[data-attendance="ragu"] {
-      color:#8d7042;
-      background:#f7efdf;
-      border-color:#e7d6b4;
-    }
     .wish-message {
       grid-column:2;
       grid-row:2;
@@ -2264,7 +2245,6 @@
   const previousPage = document.getElementById('wish-previous');
   const nextPage = document.getElementById('wish-next');
   const pageLabel = document.getElementById('wish-page-label');
-  const attendanceLabels = { hadir: 'Hadir', tidak_hadir: 'Tidak Hadir', ragu: 'Masih Ragu' };
   let currentWishPage = 1;
   let wishLoadRequest = 0;
   let sendingWish = false;
@@ -2304,11 +2284,7 @@
       const author = document.createElement('strong');
       author.className = 'wish-author';
       author.textContent = entry.name;
-      const attendance = document.createElement('span');
-      attendance.className = 'wish-attendance';
-      attendance.dataset.attendance = entry.attendance;
-      attendance.textContent = attendanceLabels[entry.attendance] || '';
-      head.append(author, attendance);
+      head.append(author);
       const message = document.createElement('p');
       message.className = 'wish-message';
       message.textContent = entry.message;
