@@ -1839,6 +1839,7 @@
       position: relative;
       display: inline-block;
       max-width: 100%;
+      font-size: clamp(14px, 4.2vw, 22px);
       padding: 14px 26px;
       border: 1px solid #d7bd91;
       border-radius: 60px;
@@ -1915,7 +1916,7 @@
       .name { font-size: clamp(15px, 4.6vw, 26px); }
       .cover-child { font-size: 21px; }
       .parents { padding: 0; }
-      .parents strong { padding: 12px 20px; }
+      .parents strong { padding: 12px 14px; }
       .countdown-panel { margin-top: 22px; padding: 28px 13px 22px; }
       .countdown-title { font-size: 29px; margin-bottom: 20px; }
       .countdown { gap: 7px; }
@@ -1961,9 +1962,9 @@
       <h2 class="name" id="child-name" data-fit-line><span class="fit-line-text">Ni Komang Daivi Berliana Aisvarya</span></h2></div>
       <div class="parents" data-reveal>
         <p class="parents-label">Putri dari</p>
-        <p><strong>I Gede Eka Sumahendra, S.H., M.H.</strong></p>
+        <p><strong data-fit-line><span class="fit-line-text">I Gede Eka Sumahendra, S.H., M.H.</span></strong></p>
         <p class="and">dan</p>
-        <p><strong>Bdn. Kadek Astiarini Utami, S.Keb.</strong></p>
+        <p><strong data-fit-line><span class="fit-line-text">Bdn. Kadek Astiarini Utami, S.Keb.</span></strong></p>
       </div>
       <div class="rule" aria-hidden="true"><span></span></div>
 
@@ -2183,9 +2184,11 @@
     document.querySelectorAll('[data-fit-line]').forEach(line => {
       line.style.fontSize = '';
       const content = line.querySelector('.fit-line-text');
-      const available = line.clientWidth - 1;
+      const style = window.getComputedStyle(line);
+      // Lebar teks memperhitungkan ruang di dalam bingkai nama orang tua.
+      const available = line.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0) - 1;
       if (!content || available <= 0) return;
-      let size = parseFloat(window.getComputedStyle(line).fontSize);
+      let size = parseFloat(style.fontSize);
       for (let attempt = 0; attempt < 4; attempt++) {
         const width = content.scrollWidth;
         if (width <= available || width === 0) break;
